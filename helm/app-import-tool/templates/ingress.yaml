@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-import-tool
+  namespace: {{ .Values.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - host: "{{ .Values.network.host }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/app-import-tool(/|$)(.*)"
+        backend:
+          service:
+            name: app-import-tool
+            port:
+              number: 80

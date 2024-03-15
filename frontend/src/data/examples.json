@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Image conversion application using a Directory input",
+    "name": "convert-stac-app",
+    "url": "https://raw.githubusercontent.com/EOEPCA/convert/main/convert-stac-app.cwl",
+    "info": "https://github.com/EOEPCA/convert"
+  },
+  {
+    "label": "Image conversion application using a URL input",
+    "name": "convert-url-app",
+    "url": "https://raw.githubusercontent.com/EOEPCA/convert/main/convert-url-app.cwl",
+    "info": "https://github.com/EOEPCA/convert"
+  }
+]

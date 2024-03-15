@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-import-tool
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: app-import-tool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-import-tool
+  template:
+    metadata:
+      labels:
+        app: app-import-tool
+    spec:
+      containers:
+        - name: app-import-tool
+          image: "{{ .Values.docker.registry_prefix }}{{ .Values.docker.image_name }}:{{ .Values.docker.image_tag }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: DOCKER_HOST
+              value: tcp://127.0.0.1:2375
+            - name: DEFAULT_REGISTRY
+              value: {{ tpl .Values.registry.address . }}
+            - name: DEFAULT_REGISTRY_USERNAME
+              value: {{ .Values.registry.username}}
+            - name: DEFAULT_REGISTRY_PASSWORD
+              value: {{ .Values.registry.password }}
+          volumeMounts:
+            - name: configuration-maps
+              mountPath: /app/backend/dependencyMap.yaml
+              subPath: dependencyMap.yaml
+            - name: configuration-maps
+              mountPath: /app/backend/repositories.json
+              subPath: repositories.json
+            - name: tmp
+              mountPath: /tmp
+        - name: dind
+          image: docker:24.0.3-dind
+          command:
+            - dockerd
+            - --host=tcp://0.0.0.0:2375
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: dind-storage
+              mountPath: /var/lib/docker
+            - name: tmp
+              mountPath: /tmp
+      imagePullSecrets:
+        - name: app-import-tool-secret
+      restartPolicy: Always
+      volumes:
+        - name: dind-storage
+          emptyDir: {}
+        - name: configuration-maps
+          configMap: 
+            name: configuration-maps
+        - name: tmp
+          emptyDir: {}

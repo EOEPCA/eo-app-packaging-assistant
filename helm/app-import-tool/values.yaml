@@ -1,0 +1,20 @@
+docker:
+  registry_prefix: nexus.spaceapplications.com/repository/docker-eoepca/
+  image_name: ap-editor
+  image_tag: 2023-04-07a
+  configjson: bm90YW5hY3R1YWxkb2NrZXJjb25maWc=
+
+storage:
+  storageClassName: ""
+
+namespace: app-import-tool
+
+network:
+  host: eoepca-testing.spaceapplications.com
+
+nodeSelector: {}
+
+registry:
+  address: "localhost:5000"
+  username: ""
+  password: ""

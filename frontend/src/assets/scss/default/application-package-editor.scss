@@ -1,0 +1,7 @@
+@import "bootstrap-variable-override";
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap-vue/src/index.scss";
+@import "variables";
+@import "nav";
+
+@import "vue-multiselect-override";

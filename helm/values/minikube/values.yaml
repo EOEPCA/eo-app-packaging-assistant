@@ -1,0 +1,16 @@
+docker:
+  registry_prefix: "nexus.spaceapplications.com/repository/docker-eoepca/"
+  image_name: app-import-tool
+  image_tag: 021415c
+
+storage:
+  storageClassName: "standard"
+
+network:
+  host: 192.168.49.2.nip.io
+
+nodeSelector: {}
+
+registry:
+  address: "nexus.spaceapplications.com/repository/docker-asb-procs"
+  username: "asb-rw"

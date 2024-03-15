@@ -1,0 +1,29 @@
+// Local ASB Default Theme variables
+
+// Tabs
+
+$nav-tabs-border-width: 2px;
+$nav-tabs-active-border-width: 3px;
+$nav-tabs-link-color: $gray-500;
+$nav-tabs-link-hover-color: $gray-600;
+$nav-tabs-link-hover-border-color: $gray-500;
+$nav-tabs-link-active-color: $gray-700;
+$nav-tabs-link-active-border-color: $nav-tabs-link-active-color;
+
+// Navbar
+
+$navbar-light-color: $gray-700;
+$navbar-light-hover-color: $black;
+$navbar-light-hover-background-color: $gray-300;
+$navbar-light-active-color: $gray-900;
+$navbar-light-active-background-color: $gray-300;
+$navbar-height: 45px;
+
+// Sidebar
+
+$sidebar-width: 270px;
+$sidebar-collapsed-width: 70px;
+
+$sidebar-bg-color: theme-color('light');
+$sidebar-border-width: 1px;
+$sidebar-border-color: gray("200");

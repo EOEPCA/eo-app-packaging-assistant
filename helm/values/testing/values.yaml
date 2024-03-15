@@ -1,0 +1,16 @@
+docker:
+  registry_prefix: "nexus.spaceapplications.com/repository/docker-eoepca/"
+  image_name: app-import-tool
+  image_tag: 021415c
+
+storage:
+  storageClassName: managed-nfs-storage
+
+network:
+  host: eoepca-testing.spaceapplications.com
+
+nodeSelector: {}
+
+registry:
+  address: "nexus.spaceapplications.com/repository/docker-asb-procs/applications"
+  username: "asb-rw"

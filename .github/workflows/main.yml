@@ -1,0 +1,27 @@
+name: Publish docs via GitHub Pages
+on:
+  push:
+    branches:
+      - main
+
+  # Allows to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  publish-docs-to-current:
+    name: Publish docs to 'current'
+    runs-on: ubuntu-latest
+    container:
+      image: eoepca/mkdocs-material
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+      - name: Configure git
+        run: |
+          git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+          git config --global user.name "SpaceApplications CI"
+          git config --global user.email "ci@spaceapplications.com"
+          git fetch origin gh-pages --depth=1
+      - name: Publish version
+        working-directory: ./docs
+        run: mike deploy --push --update-aliases current latest -t latest

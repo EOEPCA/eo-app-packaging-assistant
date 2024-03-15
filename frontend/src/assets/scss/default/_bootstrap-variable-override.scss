@@ -1,0 +1,39 @@
+$body-bg: #FDFDFD;
+
+$primary: #2e425a !default;
+$secondary: #757575 !default;
+$principal: #00579b !default;
+$danger: #990000 !default;
+$dark: #333 !default;
+$failed: #aa0400 !default;
+$pending: #e89402 !default;
+$generated: #2b8e2f !default;
+$transparent: rgba(255, 255, 255, 0) !default;
+$plain: #fefefe;
+$disabled: #808080 !default;
+$archived: rgba(255, 170, 0, 0.61) !default;
+
+$theme-colors: (
+        "primary": $primary,
+        "secondary": $secondary,
+        "principal": $principal,
+        "danger": $danger,
+        "failed": $failed,
+        "pending": $pending,
+        "dark": $dark,
+        "generated": $generated,
+        "transparent": $transparent,
+        "plain": $plain,
+        "disabled": $disabled,
+        "archived": $archived
+);
+
+$pagination-active-bg: $dark;
+$pagination-color: $dark;
+
+$font-size-base: 0.8rem !default;
+
+// Dropdowns
+
+$dropdown-border-radius: 0;
+$dropdown-inner-border-radius: 0;

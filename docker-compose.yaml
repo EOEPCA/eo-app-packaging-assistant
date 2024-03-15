@@ -1,0 +1,49 @@
+version: "3.7"
+
+x-defaults: &defaults
+  networks:
+    - core
+
+x-args: &args
+  REGISTRY: ${REGISTRY}
+  VERSION: ${VERSION-latest}
+
+services:
+  app-import-tool:
+    <<: *defaults
+    image: ${REGISTRY}app-import-tool:${VERSION-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+    #  # Must be set when connecting to Docker on a remote host (not via Unix socket)
+     - DOCKER_HOST=tcp://dind:2375
+     - DEFAULT_REGISTRY=nexus.spaceapplications.com/repository/docker-asb-procs
+     - DEFAULT_REGISTRY_USERNAME=""
+     - DEFAULT_REGISTRY_PASSWORD=""
+    ports:
+     - 80:80
+    volumes:
+    - tmp:/tmp
+
+  dind:
+    <<: *defaults
+    image: docker:24.0.3-dind
+    entrypoint: dockerd --host=tcp://0.0.0.0:2375 --insecure-registry=10.6.1.135:80 --tls=false
+    privileged: true
+    ports:
+     - 2375:2375
+    volumes:
+      - tmp:/tmp
+
+networks:
+  core:
+    # driver: bridge
+    # driver_opts:
+    #   com.docker.network.driver.mtu: 1500
+    # ipam:
+    #   config:
+    #     - subnet: 192.168.6.0/24
+
+volumes:
+  tmp:

@@ -1,0 +1,33 @@
+site_name: Application Import Tool Documentation
+site_url: https://eoepca.github.io/app-import-tool
+site_dir: public
+docs_dir: source
+repo_name: 'EOEPCA/app-import-tool'
+repo_url: 'https://github.com/EOEPCA/app-import-tool'
+
+nav:
+  - Home: index.md
+  - User Manual: user-manual/index.md
+
+extra_css:
+    - css/extra.css
+
+theme:
+  name: material
+  navigation_depth: 4
+  logo: img/favicon.ico
+  favicon: img/favicon.ico
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+
+markdown_extensions:
+    - attr_list
+
+extra:
+  version:
+    provider: mike
+    default: latest

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configuration-maps
+  namespace: {{ .Values.namespace }}
+data:
+  dependencyMap.yaml: |-
+    {{ tpl ( .Files.Get "configs/dependencyMap.yaml.tpl") . | indent 4 | trim}}
+  repositories.json: |-
+    {{ tpl ( .Files.Get "configs/repositories.json.tpl") . | indent 4 | trim }}
