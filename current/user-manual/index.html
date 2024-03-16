@@ -1,0 +1,732 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://eoepca.github.io/app-import-tool/current/user-manual/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+    
+    
+      
+        <title>User Manual - Application Import Tool Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#user-manual" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Application Import Tool Documentation" class="md-header__button md-logo" aria-label="Application Import Tool Documentation" data-md-component="logo">
+      
+  <img src="../img/favicon.ico" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Application Import Tool Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              User Manual
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/EOEPCA/app-import-tool" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    EOEPCA/app-import-tool
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Application Import Tool Documentation" class="md-nav__button md-logo" aria-label="Application Import Tool Documentation" data-md-component="logo">
+      
+  <img src="../img/favicon.ico" alt="logo">
+
+    </a>
+    Application Import Tool Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/EOEPCA/app-import-tool" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    EOEPCA/app-import-tool
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    User Manual
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    User Manual
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commandlinetool-creation-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      CommandLineTool Creation Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-import-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Import Tool
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Application Import Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interface-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interface Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#header-section" class="md-nav__link">
+    <span class="md-ellipsis">
+      Header Section
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-management-section" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Management Section
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Management Section">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workspace-actions-save-and-manage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workspace Actions: Save and Manage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transfer-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transfer Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combining Actions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-section" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Section
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Section">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-line-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Line Tool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-section" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Section
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Section">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-panel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Panel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cwl-snippet-panel" class="md-nav__link">
+    <span class="md-ellipsis">
+      CWL Snippet Panel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="user-manual">User Manual</h1>
+<p><strong>Abstract</strong></p>
+<p>This document is the User Manual of the EO Application Import Tool. Its purpose is to describe the features and the capabilities supported by the Tool to facilitate its use.</p>
+<p><strong>Online version</strong></p>
+<p>An online version of this documentation is available at <a href="https://eoepca.github.io/app-import-tool/">https://eoepca.github.io/app-import-tool/</a>.</p>
+<p><strong>Abbreviations and Acronyms</strong></p>
+<table>
+<thead>
+<tr>
+<th>Abbreviations / Acronyms</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AP</td>
+<td>Application Package</td>
+</tr>
+<tr>
+<td>BP</td>
+<td>Best Practice</td>
+</tr>
+<tr>
+<td>CLT</td>
+<td>Command Line Tool</td>
+</tr>
+<tr>
+<td>CWL</td>
+<td>Common Workflow Language</td>
+</tr>
+<tr>
+<td>EO</td>
+<td>Earth Observation</td>
+</tr>
+<tr>
+<td>ESA</td>
+<td>European Space Agency</td>
+</tr>
+<tr>
+<td>GUI</td>
+<td>Graphical User Interface</td>
+</tr>
+<tr>
+<td>OGC</td>
+<td>Open Geospatial Consortium</td>
+</tr>
+</tbody>
+</table>
+<h2 id="introduction">Introduction</h2>
+<p>The Tool is an online web application that allows building Docker images and generating CWL-formatted CLT snippets in an interactive manner. The CLT snippets are generated according to the <a href="https://docs.ogc.org/bp/20-089r1.html">OGC Best Practice for Earth Observation Application Package</a>.</p>
+<p>The Tool allows:</p>
+<ul>
+<li>specifying the <strong>Command Line Tool properties</strong> to be included in the CWL snippet. Command Line Tools (also called Processing Tasks) are executable, non-interactive programs that read some inputs, perform a computation, and terminate after producing some outputs.</li>
+<li>uploading the <strong>application implementation files</strong> to be packaged in a Docker image. The files must contain the executable (pre-compile if necessary) code of the program and any configuration and data files required for executing the program. These files are copied in a Docker image during the build operation.</li>
+<li>selecting the <strong>software dependencies</strong> that must also be present in the Docker image to permit the execution of the program. Software dependencies are automatically installed during the build operation.</li>
+<li>performing a <strong>dry-run of the application import</strong> to verify the application is executable in the Docker image without persisting that image.</li>
+<li>executing the <strong>application import</strong> to build, test and persist the Docker image in a Docker repository, and generate the corresponding CWL snippet.</li>
+</ul>
+<p>The Tool uses a form based interface for providing or selecting the necessary inputs. The validation and building operations are performed in the back-end and feedback is displayed on the interface in real-time.</p>
+<p>The Tool generates a Docker image that contains the application executable files, and a CLT snippet encoded in CWL that contains the CLT properties, including the address of the Docker image.</p>
+<h2 id="commandlinetool-creation-guidelines">CommandLineTool Creation Guidelines</h2>
+<p>The creation of an application starts with the implementation of the actual processing task. This must be done offline, using inputs available locally and storing generated outputs locally as well. The result consists of:</p>
+<ul>
+<li>the files that implement the processing task,</li>
+<li>the definition of the command line: the main executable, possibly using an interpreted, and its arguments,</li>
+<li>the software dependencies, such as native Linux or Python libraries used by the processing task.</li>
+</ul>
+<p>These elements are used in the Application Import Tool to build the Docker image and generate the CWL snippet. </p>
+<h2 id="application-import-tool">Application Import Tool</h2>
+<h3 id="interface-overview">Interface Overview</h3>
+<p>The interface of the Application Import Tool is divided in 3 main sections whose purpose is shown in the Figure <em>User Interface Overview</em>:</p>
+<ol>
+<li><strong>Header section</strong>: This section inlucdes a drop-down menu that provides users with links and features helping the user to use the Tool.</li>
+<li><strong>Configuration Section</strong>: This is the main section of the Tool used to specify the CLT properties, upload implementation files, and configure the software dependencies. It also contains controls to manage the CLT snippet files generated by the editor. Users here can choose from where to open or save a CWL file as well as edit the name of it and its version.</li>
+<li><strong>Build Section</strong>: This section contains the controls for building the Docker images and generating the CWL snippets. It is possible to proceed with a <em>dry-run</em>, meaning the build is performed but the Docker image is not persisted, or with a build followed by the storage of the Docker image in a Docker registry.</li>
+</ol>
+<p>Note that if the user screen or browser window is not wide enough, the Build Section automatically moves below the Configuration Section.</p>
+<p><img alt="User Interface Overview" src="../assets/user_manual/overview.png" />
+<em><p style="text-align: center;">User Interface Overview</p></em></p>
+<h3 id="header-section">Header Section</h3>
+<p>The header section provides a helper menu from which users can change general settings of the Application Import Tool, access applicable documents and start guided tours on how to use the user interface. The helper menu provides the following actions as can be seen in the <em>Helper Menu</em> figure:</p>
+<ul>
+<li><strong>Reset</strong>: Resets the application configuration to a default state, that is without any Application configuration loaded. The user is asked to confirm this action as it may lead to loosing unsaved changes.</li>
+<li><strong>Editing Mode</strong>: Allows users to choose between <em>Simple</em> and <em>Advanced</em> modes. In <em>Advanced</em> mode, the forms show optional fields that are not regularly used. By default the <em>Simple</em> mode is enabled as it makes the interface look simpler and less complex.</li>
+<li><strong>Manuals &amp; References</strong>: Gives users access to applicable documentation such as this User Manual and the OGC Best Practice document for Earth Observation Application Package.</li>
+<li><strong>Guided Tour</strong>: Provides users with an interactive guided tour that demonstrates an end-to-end use of the Tool.</li>
+</ul>
+<p><img alt="Helper Menu" src="../assets/user_manual/help_menu.png" />
+<em><p style="text-align: center;">Helper Menu</p></em></p>
+<h3 id="file-management-section">File Management Section</h3>
+<p>The file management buttons located in the Command Line Tool title bar provide users with a set of controls to transfer, save and manage the CWL snippets created using the Application Import Tool. The possible actions are as shown in this figure:</p>
+<p><img alt="File Management Actions" src="../assets/user_manual/file_manager_actions.png" />
+<em><p style="text-align: center;">File Management Actions</p></em></p>
+<h4 id="workspace-actions-save-and-manage">Workspace Actions: Save and Manage</h4>
+<p>These actions allow saving and managing Application configuration as CWL files in the Workspace of the current user. Note: this requires the Application Import Tool to be running in an EOEPCA Workspace.</p>
+<p>The <strong>Save</strong> button opens a popup dialog box that allows saving the current CLT snippet as a CWL file in the user Workspace. In this box, users can change the snippet name and version before performing the save.</p>
+<p><img alt="Application Save Popup" src="../assets/user_manual/workspace_saver.png" />
+<em><p style="text-align: center;">Application Save Popup</p></em></p>
+<p>The <strong>Manage</strong> button opens a manager that allows users to explore and manage the Applications saved in their workspace. Users have the possibility to navigate between Applications and see the saved versions. This manager also provides version specific actions that allow the user to <strong>open, lock, unlock, delete and download</strong> each Application version.</p>
+<p><img alt="Application Manager" src="../assets/user_manual/app_manager.png" />
+<em><p style="text-align: center;">Application Manager</p></em></p>
+<p><img alt="Application Versions Manager" src="../assets/user_manual/app_versions_manager.png" />
+<em><p style="text-align: center;">Application Versions Manager</p></em></p>
+<h4 id="transfer-actions">Transfer Actions</h4>
+<p>These actions allow users to transfer Application CWL files from their local storage to the Tool and vice versa.
+Two actions are available:</p>
+<ul>
+<li><strong>Upload</strong>: The upload button allows users to directly load an Application CWL file from their local storage in order to edit it using the Application Import Tool.</li>
+<li><strong>Download</strong>: The download button allows users to download the Application currently loaded in the Application Import Tool as a CWL file on the local system.</li>
+</ul>
+<h4 id="combining-actions">Combining Actions</h4>
+<p>The workspace and transfer actions can be used together meaning that a user can transfer an Application CWL file from his local storage to the Tool and then save it directly in his Workspace and vice versa.</p>
+<h3 id="configuration-section">Configuration Section</h3>
+<p>The <strong>Configuration Section</strong> is the main section of the Application Import Tool and consists of three sub-pages titled <strong>Command Line Tool</strong>, <strong>Application Files</strong> and <strong>Build Options</strong>, as shown in the next figure. More information about these tabs are available by clicking the information icons next to the tab name.</p>
+<h4 id="command-line-tool">Command Line Tool</h4>
+<p>The <strong>Command Line Tool</strong> tab in the editor section allows users to specify the properties of the processing task, including the executable program name, inputs, outputs and requirements that must be met in order to execute
+the processing task.</p>
+<p>As shown in the <em>Editor Command Line Tool Tab</em> figure, a user can:</p>
+<ol>
+<li>Enter an identifier for the processing task. This identifier is mandatory as it allows referring to the processing tasks when integrated as jobs in a CWL workflow. Note that the class of the process is set to <code>CommandLineTool</code> and cannot be changed. A human-friendly label and description may also be entered as this will be more informative to the users who want to use this application in their workflows.</li>
+<li>Specify the program to execute to process the inputs. If defined as an array, the first element of the array is the command to execute, and subsequent elements are mandatory command line arguments.</li>
+<li>Specify the command line bindings which are not directly associated with input parameters.</li>
+<li>Define the inputs of the processing task with their id, type, default value and input bindings. Note that providing inputs default values is not mandatory but allows verifying the program can be executed during the build process (as explained in the <a href="#build-panel">Build section</a>, below).</li>
+<li>Define the outputs of the processing task with their identifier, type, and output bindings.</li>
+<li>Add the requirements that must be met in order to execute the processing task. Note: The Application Import Tool will automatically insert a <code>DockerRequirement</code> when the application Docker image is built.</li>
+</ol>
+<p>Note that the content of the inputs and outputs configuration forms highly depends on the editing mode (explained in the <a href="#header-section">Header Section</a>). If you are missing options in these forms, switch to the Advanced mode in the Helper Menu.</p>
+<p><img alt="Command Line Tool Tab" src="../assets/user_manual/tab_CommandLineTool.png" />
+<em><p style="text-align: center;">Command Line Tool Tab</p></em></p>
+<h4 id="application-files">Application Files</h4>
+<p>The <strong>Application Files</strong> tab contains a drop-zone that allows users upload the files implementing the program. These may include native (pre-compiled) executable files, scripts, configuration and data files. The files may be dragged and dropped on the drop-zone, but clicking on that area also reveals a file selection box that allows navigating and selecting the files to be uploaded.</p>
+<p>All regular files uploaded this way will be copied in the same folder in the application Docker image.</p>
+<p>Two special mechanisms are also supported:</p>
+<ul>
+<li>
+<p>If a file named <code>requirements.txt</code> is uploaded, this is used during the build process to install the Python packages listed in it (i.e. using the standard <code>pip</code> command).</p>
+</li>
+<li>
+<p>Uploaded <code>*.tar</code> or <code>*.tgz</code> files are automatically inflated during the build process. This allows copying a high amount of files at once as well as organising the program files in a folder hierarchy.</p>
+</li>
+</ul>
+<p>Files uploaded by mistake cannot be removed individually. Click on the <strong>Remove All Files</strong> button before uploading the correct files again.</p>
+<p>On the following figure two files have been uploaded in the drop-zone: <code>numpy_test.py</code> and <code>requirements.txt</code>:</p>
+<p><img alt="Application Files Tab" src="../assets/user_manual/tab_ApplicationFiles.png" />
+<em><p style="text-align: center;">Application Files Tab</p></em></p>
+<h4 id="build-options">Build Options</h4>
+<p>The <strong>Build Options</strong> tab allows specifying the software tools and libraries required to execute the program in the application Docker image and the repository where the Docker image must be pushed.</p>
+<p><strong>Software Dependencies</strong></p>
+<p>As explained above, Python packages may be installed by including a <code>requirements.txt</code> file in the application files, however this does not allow installing native libraries, for example.</p>
+<p>Note: The available software dependencies depend on the actual configuration of the Application Import Tool. Different platforms may propose different options. Instructions for configuring the Tool may be found in the <a href="https://github.com/eoepca/app-import-tool">GitHub <code>README</code></a>.</p>
+<p>Click on the "Software Dependencies" list to reveal the pre-configured dependencies and select the ones that are required. Internally, the Tool takes care of cross-dependencies and incompatibilities. If a selected software is incompatible with others, these are grayed out in the list.</p>
+<p><strong>Registry</strong></p>
+<p>The <strong>Registry</strong> form allows indicating where the generated Docker image must be pushed after a successful build. Two options are provided:</p>
+<ul>
+<li>
+<p>When <strong>Default Service Registry</strong> is selected, the default registry configured in the Application Import Tool is used. Note that this relies on how the Tool has been configured (see <a href="https://github.com/eoepca/app-import-tool">GitHub <code>README</code></a>).</p>
+</li>
+<li>
+<p>When <strong>Custom Registry</strong> is selected, the user may enter the address of a publicly accessible Docker registry (for both pulling and pushing Docker images). The address may contain the path to be prepended to the Docker image name.</p>
+</li>
+</ul>
+<p>The name of the generated Docker image will always contain the identifier of the application. The <strong>Image tag</strong> field allows entering a custom tag for differenciating different versions of the application.</p>
+<p>When a custom registry is used, the resulting image address is: <code>&lt;registry-name&gt;/&lt;image-path&gt;/&lt;image-identifier&gt;:&lt;image-tag&gt;</code></p>
+<p>In the following figure, the <strong>Flask</strong> software is selected. Its availability will be verified by executing the <code>/app/numpy_test.py</code> script as configured in the Command Line Tool panel.</p>
+<p><img alt="Build Options Tab" src="../assets/user_manual/tab_BuildOptions.png" />
+<em><p style="text-align: center;">Build Options Tab</p></em></p>
+<h3 id="build-section">Build Section</h3>
+<p>The <strong>Build Section</strong>, located on the right side of the page, provides the buttons to trigger the build process and accessing the corresponding logs.</p>
+<p><img alt="Build Section" src="../assets/user_manual/build_section.png" />
+<em><p style="text-align: center;">Build Section</p></em></p>
+<h4 id="build-panel">Build Panel</h4>
+<p>The <strong>Build</strong> panel contains the following elements:</p>
+<ul>
+<li>A <strong>Build (Dry Run)</strong> button allows building a Docker image copying (and extracting if necessary) the uploaded application files and installing the selected software dependencies. When the build is complete, the Docker image is deleted and not persisted in a registry.</li>
+<li>The checkbox <strong>Perform a test run with default values</strong> allows requesting the application program to be actually executed in a Docker container using the default values given to the application input parameters. Note: For this option to be available, all the mandatory parameters must have been given a default value (in the <a href="#command-line-tool">Command Line Tool</a> tab). <strong>It is recommended to the application developers to take this into account and foresee in their program code the detection of the default values in order to perform some sanity checks instead of a real processing</strong>. Real processing would likely fail anyway as no input files are actually stated-in during a test run. Performing a test run is helpful, for example, to verify that all the Python libraries necessary to running the program may be imported.</li>
+<li>The <strong>Build and Push to Repository</strong> button is used to trigger the build of a Docker image, perform a test run if requested, and if successful, push the new image in the Docker registry selected by the user.</li>
+</ul>
+<p><strong>Live outputs</strong> may be displayed during the build process. Internally, more detailed logs are collected. These may be obtained when the build process is complete (successfully or not), by clicking on the <strong>Show detailed logs</strong> button.</p>
+<p><img alt="Build Live Output" src="../assets/user_manual/build_live_output.png" />
+<em><p style="text-align: center;">Build Live Output</p></em></p>
+<p><img alt="Build Success" src="../assets/user_manual/build_success.png" />
+<em><p style="text-align: center;">Build Success</p></em></p>
+<p>Detailed logs are displayed in a popup dialog box when the <strong>Show detailed logs</strong> button is clicked. The log text may be copied as necessary:</p>
+<p><img alt="Build Detailed Logs" src="../assets/user_manual/build_detailed_logs.png" />
+<em><p style="text-align: center;">Build Detailed Logs</p></em></p>
+<h4 id="cwl-snippet-panel">CWL Snippet Panel</h4>
+<p>This panel displays the CWL snippet synchronised with the application properties entered in the <a href="#command-line-tool">Command Line Tool</a> form. The view is updated after every action of the user in the form.</p>
+<p>The <code>DockerRequirement</code> entry and the <code>dockerPull</code> property are also automatically inserted after a successful build.</p>
+<p><img alt="CLT CWL Snippet" src="../assets/user_manual/cwl_snippet.png" />
+<em><p style="text-align: center;">Command Line Tool CWL Snippet</p></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "toc.integrate", "navigation.top"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+    
+  </body>
+</html>
