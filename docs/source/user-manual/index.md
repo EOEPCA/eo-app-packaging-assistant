@@ -6,7 +6,7 @@ This document is the User Manual of the EO Application Import Tool. Its purpose 
 
 **Online version**
 
-An online version of this documentation is available at https://eoepca.github.io/app-import-tool.
+An online version of this documentation is available at <https://eoepca.github.io/app-import-tool/>.
 
 **Abbreviations and Acronyms**
 
