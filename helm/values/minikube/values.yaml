@@ -1,6 +1,6 @@
 docker:
   registry_prefix: "nexus.spaceapplications.com/repository/docker-eoepca/"
-  image_name: app-import-tool
+  image_name: eo-app-packaging-assistant
   image_tag: 021415c
 
 storage:

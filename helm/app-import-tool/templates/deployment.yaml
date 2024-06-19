@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-import-tool
+  name: eo-app-packaging-assistant
   namespace: {{ .Values.namespace }}
   labels:
-    app: app-import-tool
+    app: eo-app-packaging-assistant
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app-import-tool
+      app: eo-app-packaging-assistant
   template:
     metadata:
       labels:
-        app: app-import-tool
+        app: eo-app-packaging-assistant
     spec:
       containers:
-        - name: app-import-tool
+        - name: eo-app-packaging-assistant
           image: "{{ .Values.docker.registry_prefix }}{{ .Values.docker.image_name }}:{{ .Values.docker.image_tag }}"
           imagePullPolicy: IfNotPresent
           ports:
@@ -52,7 +52,7 @@ spec:
             - name: tmp
               mountPath: /tmp
       imagePullSecrets:
-        - name: app-import-tool-secret
+        - name: eo-app-packaging-assistant-secret
       restartPolicy: Always
       volumes:
         - name: dind-storage

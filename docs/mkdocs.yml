@@ -1,9 +1,9 @@
-site_name: Application Import Tool Documentation
-site_url: https://eoepca.github.io/app-import-tool
+site_name: EO Application Packaging Assistant Documentation
+site_url: https://eoepca.github.io/eo-app-packaging-assistant
 site_dir: public
 docs_dir: source
-repo_name: 'EOEPCA/app-import-tool'
-repo_url: 'https://github.com/EOEPCA/app-import-tool'
+repo_name: 'EOEPCA/eo-app-packaging-assistant'
+repo_url: 'https://github.com/EOEPCA/eo-app-packaging-assistant'
 
 nav:
   - Home: index.md

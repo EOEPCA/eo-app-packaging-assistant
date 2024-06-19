@@ -1,4 +1,4 @@
-# Welcome to MkDocs of the EO Application Import Tool
+# Welcome to MkDocs of the EO Application Packaging Assistant
 
 The guide is written in Markdown and rendered through the mkdocs tool.
 
