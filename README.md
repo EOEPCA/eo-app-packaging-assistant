@@ -1,4 +1,4 @@
-# EOEPCA application import tool
+# EO Application Packaging Assistant
 
 This tool allows application developers to easily package their code
 into a docker image and generate an associated CWL CommandLineTool snippet. 
@@ -7,7 +7,6 @@ This allows the application to be executed by a CWL compliant runner, such as th
 ## Design of the tool
 
 The tool consists of a front-end user interface accompanied by a backend service. 
-
 
 ### Front-end
 
@@ -75,9 +74,125 @@ The backend is build using FastAPI. It uses the Python Docker SDK package as its
 
 The docker builds are done in a separate docker-in-docker (`dind`) image. 
 
+## EOEPCA Application Hub Environment
+
+Follow these instructions to create a version of the EO Application Packaging Assistant
+that may be started on-demand using the EOEPCA
+[Application Hub](https://deployment-guide.docs.eoepca.org/v1.4/eoepca/application-hub/).
+
+>Note: The [Application Hub version 1.2.0](https://github.com/EOEPCA/application-hub-context/tree/1.2.0)
+and earlier may not be used to deploy this tool as they do not allow spawning more than one
+container in the same Kubernetes pod ("`extra_containers`" in the application profile, below).
+This feature will be added in a future release.
+
+1. Build, Tag and Push a docker image suitable for deployment in the EOEPCA
+   Application Hub.
+   A specific Dockerfile is available for that purpose: `Dockerfile_apphub`.
+
+   Substitute these values in the following commands:
+
+   - `DOCKER_REPO` = Name and path of the Docker repository where the image must be pushed
+   - `IMAGE_NAME` = Docker image name
+   - `IMAGE_TAG` = Docker image tag
+
+    From the root folder of this project:
+
+    ```shell
+    docker build -f Dockerfile_apphub -t <DOCKER_REPO>/<IMAGE_NAME>:<IMAGE_TAG> .
+    docker push <DOCKER_REPO>/<IMAGE_NAME>:<IMAGE_TAG>
+    ```
+
+2. Add the Application Package Editor profile in the Application Hub configuration.
+   See other examples in [`config.yaml`](https://github.com/EOEPCA/helm-charts/blob/main/charts/application-hub/files/hub/config.yml).
+
+    In addition to `DOCKER_REPO`, `IMAGE_NAME` and `IMAGE_TAG` described above, these
+    values must be substituted in the application profile:
+
+    - `DEFAULT_REGISTRY` = Name and path of the default Docker repository (used when the user selects "Default Service Repository" in the user interface)
+    - `DEFAULT_REGISTRY_USERNAME` = Username used to push the generated images to the default repository
+    - `DEFAULT_REGISTRY_PASSWORD` = Password used to push the generated images to the default repository
+
+    ```yaml
+      - id: profile_eo_app_packaging_assistant
+        groups: 
+        - group-1
+        definition: 
+          display_name: EO Application Packaging Assistant
+          slug: eo_app_packaging_assistant
+          default: False
+          kubespawner_override: 
+            cpu_limit: 1
+            mem_limit: 2G
+            image: <DOCKER_REPO>/<IMAGE_NAME>:<IMAGE_TAG>
+            extra_containers: 
+              - name: dind
+                image: docker:24.0.3-dind
+                command: ["dockerd", "--host=tcp://0.0.0.0:2375"]
+                securityContext: 
+                  privileged: true
+                volumeMounts: 
+                  - name: tmp
+                    mountPath: /tmp
+        pod_env_vars: 
+          DOCKER_HOST: "tcp://127.0.0.1:2375" 
+          DEFAULT_REGISTRY: <DEFAULT_REGISTRY> 
+          DEFAULT_REGISTRY_USERNAME: <DEFAULT_REGISTRY_USERNAME>
+          DEFAULT_REGISTRY_PASSWORD: <DEFAULT_REGISTRY_PASSWORD>
+        node_selector: 
+          {{ .Values.nodeSelector.key }}: {{ .Values.nodeSelector.value }}
+        volumes: 
+          - name: tmp
+            claim_name: claim-tmp
+            size: 1Gi
+            storage_class: "{{ .Values.jupyterhub.hub.extraEnv.STORAGE_CLASS }}"
+            access_modes: 
+              - "ReadWriteOnce"
+            volume_mount: 
+              name: tmp
+              mount_path: "/tmp"
+            persist: false
+          - name: volume-workspace
+            claim_name: claim-workspace
+            size: 1Gi
+            storage_class: "{{ .Values.jupyterhub.hub.extraEnv.STORAGE_CLASS }}"
+            access_modes: 
+              - "ReadWriteOnce"
+            volume_mount: 
+              name: volume-workspace
+              mount_path: "/workspace"
+            persist: true
+    ```
+
+    Indicate in the application profile the list of user groups who may see and run
+    the application (members of `group-1`, in this example).
+
+    The `STORAGE_CLASS` and node selector (`key` and `value`) are substituted when deployed
+    using Helm but may be directly specified in the application profile if necessary.
+
+    The volume created for the user is mounted in the application container and never
+    deleted. The CommandLineTool definitions stored in it are thus persisted across executions.
+
+    If the docker repository containing the Docker image is not public, add the encrypted
+    secret in the application profile (see [doc](https://eoepca.github.io/application-hub-context/configuration/#image-pull-secrets)):
+
+    ```yaml
+        image_pull_secrets:
+          - data: "eyJhdXRocyI6eyJ[.....]lObWxOYTNWaFpWbDRNdz09In19fQ=="
+            name: "ap-editor-pull-secret"
+            persist: false
+    ```
+
+    The `data` property must be given the encrypted version of the secret.
+
+The EO Application Packaging Assistant is listed in the available applications (Server Options)
+when authenticated in the Application Hub as a member of one of the authorised user groups.
+
+Spawning the application for the first time takes more time as the Docker images must be
+pulled from the repository. Subsequent executions take less time.
+
 ## Configuration
 
-The backend needs to be configured with a list of available parent images and additional software packages. 
+The backend must be configured with a list of available parent images and additional software packages. 
 A parent image record could look like this:
 ```yaml
 mainDependencies:
@@ -202,3 +317,10 @@ DRY-RUN: Dry run completed successfully
 ```
 
 A succesfull dry-run means that the script was run correctly. This means that the correct packages were installed in a compatible docker image and the inputs were passed to the application properly.
+
+## Useful links
+
+1. [OGC Best Practice for Earth Observation Application Package](https://docs.ogc.org/bp/20-089r1.html)
+2. [CWL CommandLineTool](https://www.commonwl.org/v1.0/CommandLineTool.html)
+3. [Application Hub Deployment](https://deployment-guide.docs.eoepca.org/v1.4/eoepca/application-hub)
+4. [Application Hub Configuration](https://eoepca.github.io/application-hub-context/configuration/)

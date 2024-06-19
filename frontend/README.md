@@ -1,4 +1,4 @@
-# EOEPCA Application Import Tool
+# EO Application Packaging Assistant
 
 ## Project setup
 ```

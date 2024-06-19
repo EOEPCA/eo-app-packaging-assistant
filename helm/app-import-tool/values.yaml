@@ -7,7 +7,7 @@ docker:
 storage:
   storageClassName: ""
 
-namespace: app-import-tool
+namespace: eo-app-packaging-assistant
 
 network:
   host: eoepca-testing.spaceapplications.com

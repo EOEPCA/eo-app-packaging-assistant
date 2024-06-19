@@ -35,6 +35,14 @@ DEFAULT_REGISTRY_PASSWORD = os.getenv("DEFAULT_REGISTRY_PASSWORD", "")
 
 DOCKER_HOST = os.getenv("DOCKER_HOST", "unix://var/run/docker.sock")
 
+FILE_SYSTEM_BASE_PATH = os.getenv(
+    "STORAGE_FILES_DIRECTORY", os.path.join(os.getcwd(), ".")
+)
+
+# Create storage directories if they don't exist yet
+os.makedirs(os.path.join(FILE_SYSTEM_BASE_PATH, "docker/uploaded_files"), exist_ok=True)
+os.makedirs(os.path.join(FILE_SYSTEM_BASE_PATH, "files"), exist_ok=True)
+
 app = FastAPI()
 
 # Variable to store docker build/push generator
@@ -88,7 +96,7 @@ buildOptions = {}
 # In k8s this will be mounted through a ConfigMap so we can reconfigure them
 with open("./dependencyMap.yaml", "r") as dependencyMap:
     # Only sent the packages to the frontend.
-    buildOptions = yaml.load(dependencyMap.read())
+    buildOptions = yaml.load(dependencyMap.read(), Loader=yaml.FullLoader)
 
 with open("./repositories.json", "r") as repositoriesMap:
     buildOptions["repositoryTypes"] = json.loads(repositoriesMap.read())
@@ -97,7 +105,7 @@ with open("./repositories.json", "r") as repositoriesMap:
 @app.post("/upload")
 def upload(file: UploadFile = File(...)):
     try:
-        file_path = os.path.join("docker/uploaded_files", file.filename)
+        file_path = os.path.join(FILE_SYSTEM_BASE_PATH, "docker/uploaded_files", file.filename)
         with open(file_path, 'wb') as f:
             shutil.copyfileobj(file.file, f)
     except Exception:
@@ -115,51 +123,60 @@ async def getLiveStatus():
             print("Live output found")
             buildPattern = r"Step (\d+)/(\d+) : (.+)"
             successPattern = r"Successfully tagged (.*)"
-            with open("docker/buildlog.txt", "w") as logFile:
-                try:
-                    for eventData in app.state.liveDockerOutput:
-                        logFile.write(formatLogEntry(eventData))
-                        if "stream" in eventData:
-                            match = re.match(buildPattern, eventData["stream"])
-                            if match:
-                                yield json.dumps({
-                                    "status": "building",
-                                    "step": match.group(1),
-                                    "max_steps": match.group(2),
-                                    "message": match.group(3)
-                                })
+            try:
+                # print(f"live output empty: {len(list(app.state.liveDockerOutput)) == 0}")
 
-                            successMatch = re.match(
-                                successPattern, eventData["stream"])
-                            if successMatch:
-                                yield json.dumps({
-                                    "status": "success",
-                                    "message": successMatch.group(1)
-                                })
-
-                        elif "dry-run" in eventData:
-                            if eventData["dry-run"] != "log-only":
-                                yield json.dumps({
-                                    "status": eventData["dry-run"],
-                                    "message": eventData["message"]
-                                })
-                        elif "status" in eventData:
+                for eventData in app.state.liveDockerOutput:
+                    if "stream" in eventData:
+                        match = re.match(buildPattern, eventData["stream"])
+                        if match:
                             yield json.dumps({
-                                "status": eventData["status"],
-                                # "progress": eventData["progressDetail"]
+                                "status": "building",
+                                "step": match.group(1),
+                                "max_steps": match.group(2),
+                                "message": match.group(3)
                             })
-                        elif "errorDetail" in eventData:
-                            yield json.dumps({
-                                "status": "failed",
-                                "message": eventData["error"]
 
+                        successMatch = re.match(
+                            successPattern, eventData["stream"])
+                        if successMatch:
+                            yield json.dumps({
+                                "status": "success",
+                                "message": successMatch.group(1)
                             })
-                except docker.errors.APIError as e:
-                    logFile.write(formatLogEntry(e))
-                    yield json.dumps({
-                        "status": "failed",
-                        "message": e.explanation
-                    })
+
+                        if not match and not successMatch:
+                            yield json.dumps({
+                                "status": "keep-alive",
+                            })
+
+                    elif "dry-run" in eventData:
+                        if eventData["dry-run"] != "log-only":
+                            yield json.dumps({
+                                "status": eventData["dry-run"],
+                                "message": eventData["message"]
+                            })
+                    elif "status" in eventData:
+                        yield json.dumps({
+                            "status": eventData["status"],
+                            # "progress": eventData["progressDetail"]
+                        })
+                    elif "errorDetail" in eventData:
+                        yield json.dumps({
+                            "status": "failed",
+                            "message": eventData["error"]
+
+                        })
+            except docker.errors.APIError as e:
+                yield json.dumps({
+                    "status": "failed",
+                    "message": e.explanation
+                })
+        else:
+            yield json.dumps({
+                "status": "end",
+                "message": "No more live output. Check logs for details"
+            })
 
     # sleep for a bit to make sure the generator is initialized
     await asyncio.sleep(0.5)
@@ -168,8 +185,8 @@ async def getLiveStatus():
 
 @app.get("/buildLog/")
 async def buildLog():
-    if os.path.exists("docker/buildlog.txt"):
-        with open("docker/buildlog.txt", "r") as logFile:
+    if os.path.exists(os.path.join(FILE_SYSTEM_BASE_PATH, "docker/buildlog.txt")):
+        with open(os.path.join(FILE_SYSTEM_BASE_PATH, "docker/buildlog.txt"), "r") as logFile:
             logs = logFile.readlines()
         return logs
 
@@ -227,7 +244,7 @@ def populateDockerPull(cwl, dockerImageReference):
     in the CWL file already contains the docker image reference.
     If this is not the case, cwltool will not run the command in any container but on the host.
     """
-    cwl_dict = yaml.load(cwl)
+    cwl_dict = yaml.load(cwl, Loader=yaml.FullLoader)
     # Check if a requirement already exists
     if "requirements" in cwl_dict["requirements"]:
         if "DockerRequirement" in cwl_dict["requirements"]:
@@ -243,9 +260,14 @@ def populateDockerPull(cwl, dockerImageReference):
 
     return yaml.dump(cwl_dict)
 
+def removePermissionWarning(output):
+    # Note: This removes a warning that is not relevant for the end user
+    # This is due to the fact that we use an external docker host so the config.json file does not exist
+    pattern = "WARNING: Error loading config file: /root/.docker/config.json: open /root/.docker/config.json: permission denied\n"
+    return output.replace(pattern, "")
 
 def buildDockerImage(dockerImageReference, push=False, dryRun=False, cwlFilePath=None, registryType="default"):
-    dockerfilePath = "./docker/"
+    dockerfilePath = os.path.join(FILE_SYSTEM_BASE_PATH, "docker/")
     cli = docker.APIClient(base_url=DOCKER_HOST)
     buildGenerator = cli.build(
         path=dockerfilePath,
@@ -253,36 +275,50 @@ def buildDockerImage(dockerImageReference, push=False, dryRun=False, cwlFilePath
         tag=dockerImageReference,
         decode=True,
     )
-    for line in buildGenerator:
-        yield line
-        if "errorDetail" in line:
+    with open("docker/buildlog.txt", "w") as logFile:
+        for line in buildGenerator:
             print(line)
-            raise Exception(f"Build failed: {line['errorDetail']['message']}")
+            logFile.write(formatLogEntry(line))
+            yield line
+            if "errorDetail" in line:
+                # Disable status endpoint
+                app.state.liveDockerOutput = None 
+                raise Exception(f"Build failed: {line['errorDetail']['message']}")
 
     print("finished build phase")
 
     if dryRun:
-        print("starting dry run")
-        yield {"dry-run": "dry-run-running", "message": "Performing dry-run with default input values..."}
+        with open("docker/buildlog.txt", "a") as logFile:
+            print("starting dry run")
+            message = {"dry-run": "dry-run-running", "message": "Performing dry-run with default input values..."}
+            yield message
+            logFile.write(formatLogEntry(message))
+            result = subprocess.run(
+                ["cwltool","--disable-pull", cwlFilePath],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
 
-        result = subprocess.run(
-            ["cwltool","--disable-pull", cwlFilePath],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
+            if result.returncode != 0:
+                message = {"errorDetail": "Dry-run failed", "error": cleanEscapeSequences(result.stderr)}
+                logFile.write(formatLogEntry(message))
+                yield message
 
-        if result.returncode != 0:
-            yield {"errorDetail": "Dry-run failed", "error": cleanEscapeSequences(result.stderr)}
-
-            raise Exception("Dry run failed.")
-        else:
-
-            yield {"dry-run": "log-only", "message": "===== STDOUT ====="}
-            yield {"dry-run": "log-only", "message": cleanEscapeSequences(result.stdout)}
-            yield {"dry-run": "log-only", "message": "===== STDERR ====="}
-            yield {"dry-run": "log-only", "message": cleanEscapeSequences(result.stderr)}
-            yield {"message": "Dry run completed successfully", "dry-run": "dry-run-success"}
+                # Disable status endpoint
+                app.state.liveDockerOutput = None 
+                raise Exception("Dry run failed.")
+            else:
+                messages = [
+                    {"dry-run": "log-only", "message": "===== STDOUT ====="},
+                    {"dry-run": "log-only", "message": cleanEscapeSequences(result.stdout)},
+                    {"dry-run": "log-only", "message": "===== STDERR ====="},
+                    {"dry-run": "log-only", "message": cleanEscapeSequences(removePermissionWarning(result.stderr))},
+                    {"message": "Dry run completed successfully", "dry-run": "dry-run-success"}
+                ]
+                for message in messages:
+                    logFile.write(formatLogEntry(message))
+                    yield message
 
     if push:
         auth_config = {}
@@ -302,8 +338,13 @@ def buildDockerImage(dockerImageReference, push=False, dryRun=False, cwlFilePath
             auth_config=auth_config
         )
 
-        for line in pushGenerator:
-            yield line
+        with open("docker/buildlog.txt", "a") as logFile:
+            for line in pushGenerator:
+                logFile.write(formatLogEntry(line))
+                yield line
+    
+    # Disable status endpoint
+    app.state.liveDockerOutput = None 
 
 
 @app.post("/clearApplicationFiles/")
@@ -387,7 +428,7 @@ def createDockerfile(buildData):
     print(f"Build data: {buildData}")
     parentImage, missingPackages = findOptimalParentImage(buildData.softwareDependency)
     snippets = [pkg["snippet"] for pkg in buildOptions["softwareDependencies"] if pkg["identifier"] in missingPackages]
-    with open("docker/Dockerfile", "w") as dockerFile:
+    with open(os.path.join(FILE_SYSTEM_BASE_PATH, "docker/Dockerfile"), "w") as dockerFile:
         dockerFile.write(f"FROM {parentImage}\n\n")
         dockerFile.write("# Start of snippets\n\n")
         for snippet in snippets:
@@ -397,9 +438,11 @@ def createDockerfile(buildData):
         dockerFile.write("WORKDIR /app\n")
         dockerFile.write("ENV PATH=$PATH:/app/\n")
         # Only attempt to copy if any files were uploaded
-        if len(os.listdir("docker/uploaded_files/")) != 0:
+        uploaded_files_dir = os.path.join(FILE_SYSTEM_BASE_PATH, "docker/uploaded_files")
+        if len(os.listdir(uploaded_files_dir)) != 0:
+            # This uploaded_files path is relative to the location of the Dockerfile
             dockerFile.write("ADD ./uploaded_files/* /app/\n\n")
-        if os.path.isfile("docker/uploaded_files/requirements.txt"):
+        if os.path.isfile(f"{uploaded_files_dir}/requirements.txt"):
             dockerFile.write(
                 "# Optional PIP install (if the uploaded files contained a requirements.txt)\n")
             dockerFile.write("RUN pip install -r requirements.txt\n\n")
@@ -425,7 +468,7 @@ def computeDockerImgReference(buildData):
 
 def deleteAllUploadedFiles():
     print("Deleting all uploaded files")
-    dir = './docker/uploaded_files'
+    dir = os.path.join(FILE_SYSTEM_BASE_PATH, "docker/uploaded_files")
     for f in os.listdir(dir):
         os.remove(os.path.join(dir, f))
 

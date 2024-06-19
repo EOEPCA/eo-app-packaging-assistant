@@ -12,9 +12,7 @@ app = FastAPI()
 router = APIRouter()
 
 
-FILE_SYSTEM_BASE_PATH = os.getenv(
-    "STORAGE_FILES_DIRECTORY", os.path.join(os.getcwd(), "files/")
-)
+FILE_SYSTEM_BASE_PATH = os.path.join(os.getenv("STORAGE_FILES_DIRECTORY", os.getcwd()), "files/")
 
 ILLEGAL_SYMBOLS = [":", "/", "|", "\\", "__locked", ";", ","]
 
@@ -133,7 +131,7 @@ async def create_or_update_application_package_version(
         cwl_file.write(cwl.cwl)
 
 
-@router.patch("/{clt_slug}/versions/{version_slug}/lock/", status_code=204)
+@router.post("/{clt_slug}/versions/{version_slug}/lock/", status_code=204)
 async def lock_application_package_version(clt_slug: str, version_slug: str) -> None:
     # Check if file exists
     cwl_path = os.path.join(FILE_SYSTEM_BASE_PATH, clt_slug, version_slug)
@@ -145,7 +143,7 @@ async def lock_application_package_version(clt_slug: str, version_slug: str) -> 
     os.rename(cwl_path + ".cwl", cwl_path + "__locked.cwl")
 
 
-@router.patch("/{clt_slug}/versions/{version_slug}/unlock/", status_code=204)
+@router.post("/{clt_slug}/versions/{version_slug}/unlock/", status_code=204)
 async def unlock_application_package_version(clt_slug: str, version_slug: str) -> None:
     cwl_path = os.path.join(FILE_SYSTEM_BASE_PATH, clt_slug, version_slug)
 

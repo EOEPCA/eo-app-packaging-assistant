@@ -9,9 +9,9 @@ x-args: &args
   VERSION: ${VERSION-latest}
 
 services:
-  app-import-tool:
+  eo-app-packaging-assistant:
     <<: *defaults
-    image: ${REGISTRY}app-import-tool:${VERSION-latest}
+    image: ${REGISTRY}eo-app-packaging-assistant:${VERSION-latest}
     build:
       context: .
       dockerfile: Dockerfile
