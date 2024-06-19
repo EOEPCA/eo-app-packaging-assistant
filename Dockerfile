@@ -32,9 +32,9 @@ RUN apt-get upgrade -y
 # Needed by cwltool to perform a dry-run
 RUN apt-get install -y docker.io 
 
-RUN addgroup --gid ${PGID} app-import-tool && \
-    adduser --system --uid ${PUID} --gid ${PGID} app-import-tool && \
-    chown -R app-import-tool:app-import-tool /app
+RUN addgroup --gid ${PGID} assistant && \
+    adduser --system --uid ${PUID} --gid ${PGID} assistant && \
+    chown -R assistant:assistant /app
 
 EXPOSE 80
 

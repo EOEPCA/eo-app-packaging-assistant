@@ -61,8 +61,8 @@
       />
     </b-modal>
     <page-title
-      title="Application Import Tool"
-      subtitle="Interactive Earth Observation Application Import Tool"
+      title="EO Application Packaging Assistant"
+      subtitle="Interactive Earth Observation Application Packaging Assistant"
     >
       <template v-slot:help>
         <div>
@@ -111,7 +111,7 @@
               <b-dropdown-item                
               @click="
                   openNewTab(
-                    'https://eoepca.github.io/app-import-tool/current/user-manual/',
+                    'https://eoepca.github.io/eo-app-packaging-assistant/current/user-manual/',
                     $event
                   )
                 "> User Manual </b-dropdown-item>
@@ -130,7 +130,7 @@
               <b-dropdown-item
                 @click="startGuidedTour('applicationImportToolTour')"
               >
-                A tour of the Application Import Tool's features
+                A tour of the EO Application Packaging Assistant features
               </b-dropdown-item>
             </div>
           </b-dropdown>
@@ -239,7 +239,7 @@
                 block
                 variant="success"
                 @click="build"
-                :disabled="false"
+                :disabled="building"
                 >Build (Dry Run)</b-button
               >
               <b-form-invalid-feedback :state="buildValidator">
@@ -253,7 +253,7 @@
                 block
                 variant="success"
                 @click="buildAndPush"
-                :disabled="false"
+                :disabled="building"
                 >Build and Push to Repository
               </b-button>
               <b-form-invalid-feedback :state="buildAndPushValidator">
@@ -266,7 +266,7 @@
               <b-checkbox 
               id="perform-dry-run"
               v-model="executionDryRun"
-              :disabled="!checkDryRunAvailable"
+              :disabled="!checkDryRunAvailable || building"
               >Perform a test run with default values                
               <b-icon
                   icon="info-circle"
@@ -285,8 +285,15 @@
                 :max="maxSteps"
                 show-progress
                 class="mb-4"
-                :variant="buildError ? 'danger' : 'primary'"
+                :variant=progressColor
+                :animated="building"
               ></b-progress>
+              <span class="text-center">
+                <b-alert :show="buildStatus == 'disconnected'" variant="warning">
+                  Your browser seems to have disconnected from the server.<br>
+                  <b-btn variant="warning" class="mt-2" @click="connectToSSE()">Reconnect</b-btn>
+                </b-alert>
+              </span>
               <b-btn
                 v-b-toggle.collapse-docker-output
                 variant="primary"
@@ -415,7 +422,7 @@ export default {
       maxSteps: 0,
       buildFinished: false,
       buildLog: [],
-      buildError: false,
+      buildStatus: "",
       push: false,
       executionDryRun: false,
     };
@@ -454,7 +461,7 @@ export default {
         this.buildProgress = [];
         this.buildFinished = false;
         this.progress = 0;
-        this.buildError = false;
+        this.buildStatus = "building";
         this.push = false;
         if (this.executionDryRun) {
           buildData["cwl"] = yaml.dump(this.cwlObject, {lineWidth: -1});
@@ -501,7 +508,7 @@ export default {
         this.buildProgress = [];
         this.buildFinished = false;
         this.progress = 0;
-        this.buildError = false;
+        this.buildStatus = "building";
         this.push = true;
         if (this.executionDryRun) {
           buildData["cwl"] = yaml.dump(this.cwlObject, {lineWidth: -1});
@@ -637,7 +644,7 @@ export default {
       this.maxSteps = 0;
       this.buildFinished = false;
       this.buildLog = [];
-      this.buildError = false;
+      this.buildStatus = "notStarted";
       this.push = false;
       this.executionDryRun = false;
       this.buildProgress = ["Build not started yet"];
@@ -655,11 +662,18 @@ export default {
         { withCredentials: true }
       );
 
+      this.buildStatus = "building";
       this.ESClient.onmessage = this.handleSSEMessage;
+      this.ESClient.onerror = () => {
+        console.warn("Disconnected");
+        // Do not try to automatically reconnect
+        // This ends up creating many connections
+        this.ESClient.close();
+        this.buildStatus = "disconnected";
+      };
     },
     handleSSEMessage(message) {
       message = JSON.parse(message.data);
-
       let prepMessage = "Preparing to push layers..";
       let waitingMessage = "Waiting for layers..";
       switch (message.status) {
@@ -670,11 +684,13 @@ export default {
           break;
         case "success":
           this.buildProgress.push(message.message);
-          if (!this.push && !this.executionDryRun) { this.finishBuilding();}
+          if (!this.push && !this.executionDryRun) { 
+            this.buildStats = "success";
+            this.finishBuilding();}
           break;
         case "failed":
           this.buildProgress.push(message.message);
-          this.buildError = true;
+          this.buildStatus = "failed";
           this.finishBuilding();
           break;
         case "Preparing":
@@ -703,7 +719,14 @@ export default {
           break;
         case "dry-run-success":
           this.buildProgress.push(message.message);
-          if (!this.push) { this.finishBuilding();}
+          if (!this.push) {
+           this.buildStatus = "success"; 
+            this.finishBuilding();}
+          break;
+        case "end":
+          this.buildProgress.push(message.message);
+          this.buildStatus = "unknown";
+          this.finishBuilding();
           break;
         default:
           if (message.status.includes("digest")) {
@@ -931,10 +954,26 @@ export default {
           return false;
         }
         if (!input.type.endsWith('?')) {
-          if (!input.default) { return false;}
+          if (input.default == undefined) { return false; }
         }
       }
       return true;
+    },
+    progressColor() {
+      switch(this.buildStatus) {
+        case "failed":
+          return "danger";
+        case "disconnected":
+          return "warning";
+        case "building":
+          return "primary";
+        case "success":
+          return "success";
+        case "unknown":
+          return "secondary";
+        default:
+          return "primary";
+      }
     }
   },
   watch: {

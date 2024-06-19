@@ -62,7 +62,7 @@ export const store = new Vuex.Store({
     },
     [mutationTypes.RESET_EDITOR](state) {
       store.replaceState({mode: state.mode, ...initialEditorState()});
-      document.title = 'EO Application Import Tool';
+      document.title = 'EO Application Packaging Assistant';
     },
     [mutationTypes.SET_CWL_OBJECT](state, cwlObject) {
       console.log("setting CWL object");

@@ -33,9 +33,9 @@ export const createUpdateApplicationPackageVersion = (apSlug, versionSlug, paylo
   api.put(urls.applicationPackageVersions.detail.base(apSlug, versionSlug), payload);
 
 export const lockApplicationPackageVersion = (apSlug, versionSlug) =>
-  api.patch(urls.applicationPackageVersions.detail.lock(apSlug, versionSlug));
+  api.post(urls.applicationPackageVersions.detail.lock(apSlug, versionSlug));
 export const unlockApplicationPackageVersion = (apSlug, versionSlug) =>
-  api.patch(urls.applicationPackageVersions.detail.unlock(apSlug, versionSlug));
+  api.post(urls.applicationPackageVersions.detail.unlock(apSlug, versionSlug));
 
 export const deleteApplicationPackage = apSlug =>
   api.delete(urls.applicationPackages.detail(apSlug));
