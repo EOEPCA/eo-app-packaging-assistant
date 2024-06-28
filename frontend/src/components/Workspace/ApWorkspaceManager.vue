@@ -179,10 +179,9 @@ export default {
       this.viewMode = 'appPackageVersions';
     },
     toHumanReadableDate(timestamp) {
-      const date = new Date(timestamp * 1000);
-      const month = date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth();
-      const day = date.getDay() < 10 ? `0${date.getDay()}` : date.getDay();
-      return `${date.getFullYear()}-${month}-${day} ${date.getHours()}:${date.getMinutes()}`;
+      const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+      const isoString = new Date((timestamp * 1000) - tzoffset).toISOString();
+      return `${isoString.split('T')[0]} ${isoString.split('T')[1].slice(0,5)}`;
     },
     sort(order, sortKey = undefined) {
       if (this.viewMode === 'appPackageVersions') {
