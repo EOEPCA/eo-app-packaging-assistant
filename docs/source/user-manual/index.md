@@ -7,7 +7,7 @@ describe the features and the capabilities supported by the Assistant to facilit
 
 **Online version**
 
-An online version of this documentation is available at <https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/>.
+An online version of this documentation is available at <https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/en/latest/user-manual/>.
 
 **Abbreviations and Acronyms**
 

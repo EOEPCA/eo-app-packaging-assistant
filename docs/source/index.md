@@ -11,6 +11,6 @@ on how to package your first Application.
 
 **Online version**
 
-An online version of this documentation is available at <https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/>
+An online version of this documentation is available at <https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/en/latest/>
 
 [User Manual]: user-manual/index.md
