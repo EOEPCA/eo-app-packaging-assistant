@@ -1,5 +1,7 @@
 site_name: EO Application Packaging Assistant
 site_url: https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/
+site_dir: public
+docs_dir: source
 repo_url: 'https://github.com/EOEPCA/eo-app-packaging-assistant'
 edit_uri: "edit/main/docs/"
 
