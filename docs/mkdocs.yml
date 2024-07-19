@@ -5,6 +5,12 @@ docs_dir: source
 repo_url: 'https://github.com/EOEPCA/eo-app-packaging-assistant'
 edit_uri: "edit/main/docs/"
 
+nav:
+  - EOEPCA Documentation: https://eoepca.readthedocs.io/
+  - EO Application Packaging Assistant:
+    - Introduction: index.md
+    - User Manual: user-manual/index.md
+
 theme:
   # name: mkdocs
   # name: readthedocs
@@ -32,12 +38,6 @@ theme:
     - search.highlight
     - search.share
     - search.suggest
-
-nav:
-  - EOEPCA Documentation: https://eoepca.readthedocs.io/
-  - EO Application Packaging Assistant:
-    - Home: index.md
-    - User Manual: user-manual/index.md
 
 extra_css:
   - css/eoepca.css
