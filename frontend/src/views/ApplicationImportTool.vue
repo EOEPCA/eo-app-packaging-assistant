@@ -111,7 +111,7 @@
               <b-dropdown-item                
               @click="
                   openNewTab(
-                    'https://eoepca.github.io/eo-app-packaging-assistant/current/user-manual/',
+                    'https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/current/user-manual/',
                     $event
                   )
                 "> User Manual </b-dropdown-item>

@@ -1,2 +1,4 @@
-mkdocs-material==9.1.14
+mkdocs-material==9.5.17
+mkdocs-autorefs==1.0.1
+mkdocs-publisher==1.2.0
 mike==1.1.2
