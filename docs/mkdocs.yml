@@ -1,31 +1,70 @@
-site_name: EO Application Packaging Assistant Documentation
-site_url: https://eoepca.github.io/eo-app-packaging-assistant
-site_dir: public
-docs_dir: source
-repo_name: 'EOEPCA/eo-app-packaging-assistant'
+site_name: EO Application Packaging Assistant
+site_url: https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/
 repo_url: 'https://github.com/EOEPCA/eo-app-packaging-assistant'
-
-nav:
-  - Home: index.md
-  - User Manual: user-manual/index.md
-
-extra_css:
-    - css/extra.css
+edit_uri: "edit/main/docs/"
 
 theme:
-  name: material
-  navigation_depth: 4
+  # name: mkdocs
+  # name: readthedocs
+  name: material # https://squidfunk.github.io/mkdocs-material/creating-your-site/
+  navigation_depth: 5
+
+  # For `material` theme...
   logo: img/favicon.ico
   favicon: img/favicon.ico
   features:
+    # Navigation
+    - navigation.footer
     - navigation.instant
     - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - toc.integrate
+    # - navigation.expand
+    # - toc.integrate
     - navigation.top
+    # Content
+    - content.code.copy
+    - content.action.edit
+    # Search
+    - search.highlight
+    - search.share
+    - search.suggest
+
+nav:
+  - EOEPCA Documentation: https://eoepca.readthedocs.io/
+  - EO Application Packaging Assistant:
+    - Home: index.md
+    - User Manual: user-manual/index.md
+
+extra_css:
+  - css/eoepca.css
+  - css/extra.css
+
+plugins:
+  - autorefs
+  - search
 
 markdown_extensions:
-    - attr_list
+  - tables
+  - toc:
+      permalink: ⚓︎
+      toc_depth: 4
+  - smarty
+  - sane_lists
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - abbr
+  - attr_list
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
 
 extra:
   version:

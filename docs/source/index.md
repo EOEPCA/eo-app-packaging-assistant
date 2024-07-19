@@ -1,9 +1,5 @@
 # EO Application Packaging Assistant
 
-Project documentation.
-
----
-
 The EO Application Packaging Assistant is an online web application that allows building Docker
 images and generating *Command Line Tool* snippets formatted using the Common Workflow Language in
 an interactive manner. The output is generated according to the
@@ -15,6 +11,6 @@ on how to package your first Application.
 
 **Online version**
 
-An online version of this documentation is available at <https://eoepca.github.io/eo-app-packaging-assistant/>
+An online version of this documentation is available at <https://eoepca.readthedocs.io/projects/eo-app-packaging-assistant/>
 
 [User Manual]: user-manual/index.md
